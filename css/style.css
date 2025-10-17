@@ -160,13 +160,76 @@ section {
     padding: 2.5rem 2rem;
     border-radius: 8px;
     text-align: center;
-    border: 1px solid transparent;
+    position: relative; 
+    overflow: hidden; /* para as bordas ficarem certas no radius */
     transition: all 0.3s ease;
 }
 
 .service-card:hover {
     transform: translateY(-10px);
-    border-color: var(--color-primary);
+    /* border-color: var(--color-primary); */ /* <-- REMOVIDO */
+}
+
+/* Dispara a animação de cada borda no hover */
+.service-card:hover::before {
+    width: 100%; /* Anima Borda #1 */
+}
+
+.service-card:hover::after {
+    height: 100%; /* Anima Borda #2 */
+}
+
+.service-card:hover .border-anim::before {
+    width: 100%; /* Anima Borda #3 */
+}
+
+.service-card:hover .border-anim::after {
+    height: 100%; /* Anima Borda #4 */
+}
+
+.service-card::before,
+.service-card::after,
+.border-anim::before,
+.border-anim::after {
+    content: '';
+    position: absolute;
+    background-color: var(--color-primary);
+    transition: all 0.3s ease-out;
+}
+
+/* Borda #1: Topo (começa na esquerda, cresce para a direita) */
+.service-card::before {
+    top: 0;
+    left: 0;
+    width: 0; /* Começa com 0 */
+    height: 2px;
+    transition-delay: 0s; /* Começa imediatamente */
+}
+
+/* Borda #2: Direita (começa no topo, cresce para baixo) */
+.service-card::after {
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 0; /* Começa com 0 */
+    transition-delay: 0.2s; /* Inicia após a Borda #1 */
+}
+
+/* Borda #3: Baixo (começa na direita, cresce para a esquerda) */
+.border-anim::before {
+    bottom: 0;
+    right: 0;
+    width: 0; /* Começa com 0 */
+    height: 2px;
+    transition-delay: 0.4s; /* Inicia após a Borda #2 */
+}
+
+.border-anim::after {
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    height: 0; 
+    transition-delay: 0.6s;
 }
 
 .service-icon {
