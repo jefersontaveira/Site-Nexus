@@ -154,4 +154,91 @@ document.addEventListener('DOMContentLoaded', () => {
     // Roda a função de inicialização
     initializeTimeline();
 
+    const logoItems = document.querySelectorAll('.logo-item');
+    const testimonialTextDisplay = document.getElementById('testimonial-text-display');
+    const testimonialAuthorDisplay = document.getElementById('testimonial-author-display');
+
+    // Adiciona o 'listener' de HOVER (mouseenter) para cada logo
+    logoItems.forEach(logo => {
+        logo.addEventListener('mouseenter', () => {
+            
+            // 1. Pega os dados do logo em que o mouse entrou
+            const newText = logo.getAttribute('data-text');
+            const newAuthor = logo.getAttribute('data-author');
+            const newCompany = logo.getAttribute('data-company');
+
+            // 2. Desativa TODOS os logos
+            logoItems.forEach(item => item.classList.remove('active'));
+            
+            // 3. Ativa apenas o logo atual
+            logo.classList.add('active');
+
+            // 4. Efeito de fade-out no texto antigo
+            testimonialTextDisplay.style.opacity = 0;
+            testimonialAuthorDisplay.style.opacity = 0;
+
+            // 5. Espera a animação de fade-out terminar (0.15s)
+            setTimeout(() => {
+                // Atualiza o conteúdo do card de destaque
+                testimonialTextDisplay.textContent = newText;
+                testimonialAuthorDisplay.innerHTML = `
+                    <cite>${newAuthor}</cite>
+                    <span>${newCompany}</span>
+                `;
+                
+                // 6. Efeito de fade-in no texto novo
+                testimonialTextDisplay.style.opacity = 1;
+                testimonialAuthorDisplay.style.opacity = 1;
+            }, 150); // 150ms (metade da transição de 0.3s)
+        });
+    });
+
+    // --- 10. CONTROLES DO SLIDER DE LOGOS (VERSÃO REVISADA) ---
+    // (Certifique-se que isso está DENTRO do 'DOMContentLoaded')
+
+    const logoGrid = document.querySelector('.testimonial-logo-grid');
+    const prevBtn = document.getElementById('logo-prev');
+    const nextBtn = document.getElementById('logo-next');
+
+    // Adicionamos uma verificação mais robusta
+    if (logoGrid && prevBtn && nextBtn) {
+        
+        // Função de scroll simplificada
+        function scrollSlider(direction) {
+            // Pega a largura visível da grade (o espaço que vemos)
+            const gridWidth = logoGrid.clientWidth; 
+            
+            // Calcula quanto rolar (80% da largura visível)
+            const scrollAmount = gridWidth * 0.8;
+            
+            if (direction === 'next') {
+                console.log("Scroll Next:", scrollAmount); // Log para debug
+                logoGrid.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else {
+                console.log("Scroll Prev:", -scrollAmount); // Log para debug
+                logoGrid.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Evento do botão "Próximo"
+        nextBtn.addEventListener('click', () => {
+            scrollSlider('next');
+        });
+
+        // Evento do botão "Anterior"
+        prevBtn.addEventListener('click', () => {
+            scrollSlider('prev');
+        });
+
+    } else {
+        // Log de erro para sabermos se os elementos não foram encontrados
+        console.error("Erro no Slider: Elementos (logoGrid, prevBtn, ou nextBtn) não foram encontrados. Verifique os IDs no HTML.");
+    }
+
 }); // <-- FIM DO 'DOMContentLoaded'
