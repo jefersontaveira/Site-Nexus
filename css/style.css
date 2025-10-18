@@ -302,24 +302,118 @@ section {
 }
 
 /* --- 7. SEÇÃO PROCESSO --- */
-.process-timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.process-step {
+.process-section {
     background-color: var(--color-bg-light);
-    padding: 2rem;
-    border-radius: 8px;
-    border-left: 4px solid var(--color-primary);
+    overflow: hidden; /* Evita que o card saia da seção */
 }
 
-.process-step h3 {
-    font-size: 1.5rem;
+/* 1. Wrapper dos Cards de Conteúdo */
+.process-content-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    height: 180px; /* Altura fixa para não "pular" */
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.process-card {
+    background-color: var(--color-bg);
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    
+    /* Mágica do Aparecimento */
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    visibility: hidden;
+}
+
+.process-card.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.process-card h3 {
+    color: var(--color-primary);
     margin-bottom: 0.5rem;
+}
+
+/* 2. A Linha do Tempo Horizontal */
+.process-timeline-horizontal {
+    position: relative;
+    width: 80%;
+    max-width: 700px;
+    margin: 0 auto;
+    height: 50px; /* Altura para centralizar os steps */
+    display: flex;
+    justify-content: space-between; /* Espaça os steps igualmente */
+    align-items: center;
+}
+
+/* A Linha de Fundo (o trilho) */
+.timeline-track {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-bg);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+/* O Círculo Luminoso (que se move) */
+.timeline-orb {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 20px 5px var(--color-primary);
+    top: 50%;
+    
+    /* Posição inicial (no primeiro step) */
+    left: 0; 
+    
+    transform: translateY(-50%);
+    z-index: 3; /* Fica sobre tudo */
+    
+    /* A MÁGICA DA ANIMAÇÃO! */
+    transition: left 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Os Marcadores (Steps) */
+.timeline-step {
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-bg);
+    border: 3px solid var(--color-bg);
+    border-radius: 50%;
+    z-index: 2; /* Fica sobre o trilho, mas abaixo do orb */
+    
+    /* Centraliza o ícone */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--color-text-secondary);
+    
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.timeline-step:hover {
+    color: var(--color-text);
+}
+
+/* Marcador ATIVO (quando o mouse está sobre) */
+.timeline-step.active {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
 }
 
 /* --- 8. SEÇÃO DEPOIMENTOS --- */
@@ -427,38 +521,33 @@ section {
 
 
 /* --- 12. RESPONSIVIDADE (MEDIA QUERIES) --- */
+
 @media (max-width: 768px) {
+    /* ... (suas regras de mobile/tablet permanecem aqui) ... */
+
+    /* Por exemplo: */
     .nav-menu {
-        /* Esconde o menu desktop em telas pequenas */
         display: none; 
-        
-        /* Estilos para quando o menu for aberto pelo JS */
         flex-direction: column;
         width: 100%;
         position: absolute;
-        top: 100%; /* Abaixo do header */
+        top: 100%; 
         left: 0;
         background-color: rgba(26, 26, 26, 0.95);
         border-top: 1px solid var(--color-bg-light);
         padding: 1rem 0;
     }
-
-    /* Classe 'active' que será adicionada pelo JS */
     .nav-menu.active {
         display: flex;
     }
-
     .nav-menu li {
         text-align: center;
         margin: 0.5rem 0;
     }
-
     .hamburger-menu {
-        display: block; /* Mostra o menu hamburger */
-        z-index: 10; /* Garante que fique clicável */
+        display: block; 
+        z-index: 10; 
     }
-
-    /* Estilo básico para o ícone do hamburger */
     .hamburger-menu span {
         display: block;
         width: 25px;
@@ -467,13 +556,29 @@ section {
         margin: 5px 0;
         transition: all 0.3s ease;
     }
-
     .hero-title {
         font-size: 2.5rem;
     }
+
+    /* Regras para o processo no mobile */
+    .process-wrapper,
+    .process-wrapper.process-left,
+    .process-wrapper.process-right {
+        justify-content: center;
+    }
+    .process-step {
+        width: 90%;
+    }
+    #timeline-svg {
+        display: none;
+    }
 }
 
+
+/* --- Este é o bloco que você pediu --- */
 @media (min-width: 768px) {
+    
+    /* Regras da Seção Sobre */
     .about-container {
         flex-direction: row;
         text-align: left;
@@ -482,39 +587,37 @@ section {
         flex: 1;
     }
 
+    /* Regras da Seção de Contato */
     .contact-wrapper {
         flex-direction: row;
     }
     .contact-info, .contact-form {
         flex: 1;
     }
-}
 
-/* --- 13. ESTILOS ADICIONAIS PARA JAVASCRIPT --- */
+    /* --- Novas Regras da Seção de Processo --- */
+    .process-wrapper {
+        justify-content: space-between; /* Ajuste para espaçar bem */
+        align-items: flex-start; /* Alinha os cards ao topo de seu wrapper */
+        margin-bottom: 0; /* Remove a margem extra */
+    }
 
-/* Efeito de Cursor Sutil com Brilho */
-body {
-    cursor: none; /* Esconde o cursor padrão */
-}
+    .process-step {
+        width: 40%; /* Reduz a largura para deixar espaço para a linha */
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 2.5rem 2rem; /* Retorna o padding original para os cards */
+    }
 
-.custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 10px;
-    height: 10px;
-    background-color: var(--color-primary);
-    border-radius: 50%;
-    z-index: 9999;
-    pointer-events: none;
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
-    box-shadow: 0 0 15px 5px var(--color-primary); /* O brilho! */
-    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Estado de hover do cursor */
-.custom-cursor.hover {
-    transform: translate(-50%, -50%) scale(1.5);
-    box-shadow: 0 0 25px 8px var(--color-primary); /* Brilho mais intenso */
+    /* Passos à esquerda */
+    .process-wrapper.process-left {
+        justify-content: flex-start; /* Garante alinhamento à esquerda */
+        padding-right: 10%; /* Empurra o card da esquerda mais para a esquerda, liberando espaço central */
+    }
+    
+    /* Passos à direita */
+    .process-wrapper.process-right {
+        justify-content: flex-end; /* Garante alinhamento à direita */
+        padding-left: 10%; /* Empurra o card da direita mais para a direita */
+    }
 }
