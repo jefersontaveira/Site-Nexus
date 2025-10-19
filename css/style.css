@@ -755,8 +755,8 @@ section {
     /* A Animação Elástica (para opacity e transform) */
     /* A Animação de Cor (para o hover) */
     transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)
-                 ease;
+                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background-color 0.1s ease;
 }
 
 /* Efeito de Hover (Mudança de cor + Zoom) */
@@ -804,6 +804,7 @@ section {
 /* --- 10. SEÇÃO CONTATO --- */
 .contact-section {
     background-color: var(--color-bg-light);
+    
 }
 
 .contact-wrapper {
@@ -813,6 +814,8 @@ section {
     background-color: var(--color-bg);
     padding: 3rem;
     border-radius: 8px;
+    position: relative;
+    overflow: hidden;
 }
 
 .contact-info h3 {
@@ -823,6 +826,7 @@ section {
 
 .form-group {
     margin-bottom: 1.5rem;
+    
 }
 
 .form-group label {
@@ -840,20 +844,148 @@ section {
     border-radius: 5px;
     color: var(--color-text);
     font-family: var(--font-family);
+    transition: border-color 0.3s ease;
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group input:hover,
+.form-group textarea:hover {
     outline: none;
     border-color: var(--color-primary);
 }
 
-/* --- 11. RODAPÉ --- */
-.main-footer {
-    padding: 2rem 0;
-    text-align: center;
-    color: var(--color-text-secondary);
-    border-top: 1px solid var(--color-bg-light);
+
+/* --- ESTILOS DOS ÍCONES DE CONTATO --- */
+
+.contact-social-icons {
+    display: flex;
+    gap: 1rem; /* Espaço entre os ícones */
+    margin-top: 2rem; /* Espaço acima dos ícones */
+}
+
+.contact-social-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    background-color: var(--color-primary);
+    color: var(--color-bg); /* Cor do ícone (letra) */
+    border-radius: 50%;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.contact-social-icons a:hover {
+    background-color: var(--color-secondary); /* Fundo fica branco (definido no :root) */
+    transform: scale(1.1);
+}
+
+
+/* O elemento da luz */
+.form-border-light {
+    position: absolute;
+    width: 80px; /* Largura do "cometa" */
+    height: 4px; /* Altura da linha */
+    opacity: 0.9;
+    z-index: 0; 
+    border-radius: 5px; 
+
+    /* CRIA O EFEITO DEGRADÊ (CAUDA) */
+    background: linear-gradient(
+        to right, 
+        transparent 0%, 
+        var(--color-primary) 50%, /* Ponto mais brilhante no meio */
+        transparent 100%
+    );
+    filter: blur(1px); /* Suaviza a luz */
+
+    /* APLICA A ANIMAÇÃO */
+    animation: borderComet 6s linear infinite; /* 6s de duração */
+}
+
+/* KEYFRAMES DA ANIMAÇÃO (VERSÃO COM TRANSFORM REFINADA) */
+@keyframes borderComet {
+    /* --- Borda Superior (Esquerda para Direita) --- */
+    0% {
+        top: 0; 
+        left: 0; /* Começa na borda */
+        width: 1px; height: 4px; /* Horizontal */
+        background: linear-gradient(to right, transparent 0%, var(--color-primary) 50%, transparent 100%);
+        transform-origin: center left; /* Origem no centro esquerdo */
+        transform: translateX(-100%); /* Começa fora (à esquerda) */
+        opacity: 0.8;
+    }
+    25% {
+        top: 0; 
+        left: 40%; /* Mantém left */
+        width: 400px; height: 4px;
+        transform-origin: center left;
+        transform: translateX(calc(100vw / (100vw / var(--contact-wrapper-width, 900px)) + 1px)); /* Move 100% da LARGURA DO WRAPPER */
+        opacity: 0.8;
+    }
+
+    /* --- Borda Direita (Cima para Baixo) --- */
+    25.01% {
+        /* Pula para o canto superior direito */
+        top: 0; 
+        left: 100%; 
+        width: 4px; height: 1px; /* Vertical */
+        background: linear-gradient(to bottom, transparent 0%, var(--color-primary) 50%, transparent 100%);
+        transform-origin: top center; /* Origem no topo centro */
+        transform: translate(-4px, -100%); /* Move para cima (-4px para alinhar) */
+        opacity: 0.8;
+    }
+    50% {
+        top: 40%; 
+        left: 100%; 
+        width: 4px; height: 400px;
+        transform-origin: top center;
+        transform: translate(-4px, calc(100vh / (100vh / var(--contact-wrapper-height, 400px)) + 1px)); /* Move 100% da ALTURA DO WRAPPER */
+        opacity: 0.8;
+    }
+ 
+    /* --- Borda Inferior (Direita para Esquerda) --- */
+    50.01% {
+        /* Pula para o canto inferior direito */
+        top: 100%; 
+        left: 100%; 
+        width: 1px; height: 4px; /* Horizontal */
+        background: linear-gradient(to left, transparent 0%, var(--color-primary) 50%, transparent 100%);
+        transform-origin: center right; /* Origem no centro direito */
+        transform: translate(-100%, -4px); /* Move para a esquerda (-4px para alinhar) */
+        opacity: 0.8;
+    }
+    75% {
+        top: 100%; 
+        left: 40%; 
+        width: 400px; height: 4px;
+        transform-origin: center right;
+        transform: translate(calc(-1 * (100vw / (100vw / var(--contact-wrapper-width, 900px)) + 1px)), -4px); /* Move 100% da LARGURA para a esquerda */
+        opacity: 0.8;
+    }
+
+    /* --- Borda Esquerda (Baixo para Cima) --- */
+    75.01% {
+        /* Pula para o canto inferior esquerdo */
+        top: 100%; 
+        left: 0; 
+        width: 4px; height: 1px; /* Vertical */
+        background: linear-gradient(to top, transparent 0%, var(--color-primary) 50%, transparent 100%);
+        transform-origin: bottom center; /* Origem na base centro */
+        transform: translateY(-100%); /* Move para cima */
+        opacity: 0.8;
+    }
+    100% {
+        top: 0; 
+        left: 0; 
+        width: 4px; height: 400px;
+        transform-origin: bottom center;
+        transform: translateY(calc(-1 * (100vh / (100vh / var(--contact-wrapper-height, 400px)) + 1px))); /* Move 100% da ALTURA para cima */
+        opacity: 0.8;
+    }
 }
 
 
