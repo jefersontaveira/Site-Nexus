@@ -125,10 +125,32 @@ section {
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-primary);
+    display: inline-block;
     text-decoration: none;
+    max-width: 250px;
+}
+
+.logo img {
+    display: block; /* Remove espaços extras abaixo da imagem */
+    width: 100%; /* Faz a imagem ocupar a largura do link pai (.logo) */
+    height: auto; /* Mantém a proporção */
+    animation: neonPulse 6s ease-in-out infinite; /* Nome, Duração, Easing, Repetição */
+}
+
+/* --- ANIMAÇÃO DE PULSO NEON PARA A LOGO --- */
+@keyframes neonPulse {
+    0% {
+        /* Estado inicial: Brilho normal */
+        filter: drop-shadow(0 0 5px var(--color-primary));
+    }
+    50% {
+        /* Meio da animação: Brilho mais intenso */
+        filter: drop-shadow(0 0 12px var(--color-primary)); 
+    }
+    100% {
+        /* Volta ao estado inicial */
+        filter: drop-shadow(0 0 5px var(--color-primary));
+    }
 }
 
 .nav-menu {
@@ -142,6 +164,7 @@ section {
     text-decoration: none;
     font-weight: 400;
     transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
 .nav-menu a:hover {
@@ -155,7 +178,7 @@ section {
     cursor: pointer;
 }
 
-/* --- 4. SEÇÃO HERO (VERSÃO ORIGINAL) --- */
+/* --- 4. SEÇÃO HERO     --- */
 .hero-section {
     min-height: 100vh;
     display: flex;
@@ -544,7 +567,6 @@ section {
     scroll-snap-align: start; 
     
     background-color: var(--color-bg-light);
-    padding: 1.5rem;
     border-radius: 8px;
     cursor: pointer;
     position: relative;
@@ -556,7 +578,7 @@ section {
     width: 100%;
     height: auto;
     display: block;
-    filter: grayscale(100%) opacity(0.6); /* Efeito Grayscale */
+    filter: grayscale(100%) opacity(0.8); /* Efeito Grayscale */
     transition: filter 0.3s ease;
 }
 
@@ -986,6 +1008,14 @@ section {
         transform: translateY(calc(-1 * (100vh / (100vh / var(--contact-wrapper-height, 400px)) + 1px))); /* Move 100% da ALTURA para cima */
         opacity: 0.8;
     }
+}
+
+.main-footer {
+    display: flex;
+    align-items: center;
+    height: 100px;
+
+    text-align: center;
 }
 
 
