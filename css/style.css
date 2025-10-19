@@ -3,6 +3,7 @@
 
 :root {
     --color-primary: #00f5c3; /* Verde tecnológico brilhante */
+    --color-secondary: #f0f0f0; /* Usando o branco-suave como cor secundária */
     --color-bg: #1a1a1a;       /* Fundo escuro (quase preto) */
     --color-bg-light: #2c2c2c; /* Fundo para cards e seções */
     --color-text: #f0f0f0;     /* Texto principal (branco suave) */
@@ -722,54 +723,70 @@ section {
     pointer-events: auto; /* Permite interagir com os ícones */
 }
 
-/* ÍCONES SOCIAIS */
+/* --- ÍCONES SOCIAIS (Bloco Completo) --- */
+
+/* O contêiner dos ícones */
 .social-icons {
     display: flex;
     gap: 0.8rem;
     margin-bottom: 1rem; /* Espaço entre os ícones e o info */
     padding-left: 0.5rem; /* Ajuste para o alinhamento */
-    opacity: 0; /* Começa invisível */
-    transform: translateY(20px); /* Começa um pouco abaixo */
-    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; /* Pequeno delay */
 }
 
-.founder-card:hover .social-icons {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+/* Os ícones individuais (Layout + Animação) */
 .social-icons a {
+    /* Layout */
     display: flex;
     justify-content: center;
     align-items: center;
     width: 35px;
     height: 35px;
-    background-color: var(--color-primary); /* Cor dos ícones */
-    color: var(--color-bg); /* Cor do ícone em si */
+    background-color: var(--color-primary); /* Cor do fundo do ícone */
+    color: var(--color-bg); /* Cor do ícone (ex: 'fab fa-github') */
     border-radius: 50%;
     font-size: 1rem;
     text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    
+    /* --- Estado Inicial da Animação --- */
+    opacity: 0;
+    transform: translateY(30px); /* Começa 30px abaixo */
+    
+    /* --- Transições --- */
+    /* A Animação Elástica (para opacity e transform) */
+    /* A Animação de Cor (para o hover) */
+    transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)
+                 ease;
 }
 
+/* Efeito de Hover (Mudança de cor + Zoom) */
 .social-icons a:hover {
-    background-color: var(--color-secondary); /* Muda de cor no hover */
-    transform: scale(1.1);
+    background-color: var(--color-secondary);
+    transform: translateY(0) scale(1.1); 
+
 }
 
-/* INFORMAÇÕES DO FUNDADOR */
-.founder-info {
-    text-align: left; /* Alinhamento do texto */
-    color: var(--color-text-light); /* Cor do texto no overlay */
-    padding-left: 0.5rem; /* Ajuste para o alinhamento */
-    opacity: 0; /* Começa invisível */
-    transform: translateY(20px); /* Começa um pouco abaixo */
-    transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s; /* Mais delay */
-}
-
-.founder-card:hover .founder-info {
+/* --- ESTADO FINAL (ATIVADO PELO HOVER NO CARD-PAI) --- */
+.founder-card:hover .social-icons a {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* --- ATRASOS DA ANIMAÇÃO (Staggering) --- */
+
+/* Instagram (sobe primeiro) */
+.social-icons a:nth-child(1) {
+    transition-delay: 0.2s;
+}
+
+/* LinkedIn (sobe em segundo) */
+.social-icons a:nth-child(2) {
+    transition-delay: 0.3s;
+}
+
+/* GitHub (sobe em terceiro) */
+.social-icons a:nth-child(3) {
+    transition-delay: 0.4s;
 }
 
 .founder-info h3 {
