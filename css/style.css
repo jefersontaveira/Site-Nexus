@@ -645,23 +645,143 @@ section {
     height: 100%;
 }
 
+
+
 /* --- 9. SEÇÃO SOBRE NÓS --- */
+.about-section {
+    padding: 6rem 0;
+    background-color: var(--color-bg);
+}
+
 .about-container {
+    text-align: center; /* Centraliza o título */
+}
+
+.about-container .section-title {
+    margin-bottom: 3rem;
+}
+
+.founders-grid {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+    justify-content: center; /* Centraliza os cards */
+    gap: 2rem; /* Espaço entre os cards */
+    max-width: 1000px; /* Limita a largura da grade */
+    margin: 0 auto;
+}
+
+.founder-card {
+    position: relative;
+    width: 300px; /* Largura fixa do card */
+    height: 300px; /* Altura fixa para ser quadrado */
+    border-radius: 15px; /* Levemente arredondado */
+    overflow: hidden; /* Esconde o que sai do card */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.founder-card:hover {
+    transform: translateY(-10px); /* Efeito de "levantar" no hover */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.founder-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem preencha o espaço */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.founder-card:hover img {
+    transform: scale(1.05); /* Zoom sutil na imagem no hover */
+}
+
+/* O OVERLAY (Camada que aparece no hover) */
+.founder-overlay {
+    position: absolute;
+    bottom: 0; /* Começa da parte inferior */
+    left: 0;
+    width: 100%;
+    height: 100%; /* Ocupa todo o card */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 100%);
     display: flex;
     flex-direction: column;
+    justify-content: flex-end; /* Alinha o conteúdo ao final */
+    align-items: flex-start; /* Alinha o conteúdo à esquerda */
+    padding: 1.5rem;
+    opacity: 0; /* Começa invisível */
+    transform: translateY(100%); /* Começa "abaixo" do card */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none; /* Permite clicar na imagem por baixo */
+}
+
+.founder-card:hover .founder-overlay {
+    opacity: 1; /* Torna visível no hover */
+    transform: translateY(0); /* Sobe para dentro do card */
+    pointer-events: auto; /* Permite interagir com os ícones */
+}
+
+/* ÍCONES SOCIAIS */
+.social-icons {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1rem; /* Espaço entre os ícones e o info */
+    padding-left: 0.5rem; /* Ajuste para o alinhamento */
+    opacity: 0; /* Começa invisível */
+    transform: translateY(20px); /* Começa um pouco abaixo */
+    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; /* Pequeno delay */
+}
+
+.founder-card:hover .social-icons {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.social-icons a {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 3rem;
+    width: 35px;
+    height: 35px;
+    background-color: var(--color-primary); /* Cor dos ícones */
+    color: var(--color-bg); /* Cor do ícone em si */
+    border-radius: 50%;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.about-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+.social-icons a:hover {
+    background-color: var(--color-secondary); /* Muda de cor no hover */
+    transform: scale(1.1);
 }
 
-.about-text h2 {
-    text-align: left;
-    margin-bottom: 1.5rem;
+/* INFORMAÇÕES DO FUNDADOR */
+.founder-info {
+    text-align: left; /* Alinhamento do texto */
+    color: var(--color-text-light); /* Cor do texto no overlay */
+    padding-left: 0.5rem; /* Ajuste para o alinhamento */
+    opacity: 0; /* Começa invisível */
+    transform: translateY(20px); /* Começa um pouco abaixo */
+    transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s; /* Mais delay */
+}
+
+.founder-card:hover .founder-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.founder-info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+    color: var(--color-primary); /* Nome em destaque */
+}
+
+.founder-info p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--color-text-light);
 }
 
 /* --- 10. SEÇÃO CONTATO --- */
