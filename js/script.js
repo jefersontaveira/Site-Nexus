@@ -1,13 +1,5 @@
-// TESTE 1: Para confirmar que o arquivo foi carregado
-console.log("TESTE 1: O arquivo script.js FOI CARREGADO.");
 
-/* Usamos o DOMContentLoaded. Todo o código está dentro dele
-   para garantir que o HTML foi carregado antes de qualquer execução.
-*/
 document.addEventListener('DOMContentLoaded', () => {
-
-    // TESTE 2: Para confirmar que o listener foi disparado
-    console.log("TESTE 2: O 'DOMContentLoaded' disparou. O script vai começar.");
 
     // --- 1. EFEITO DE CURSOR SUTIL COM BRILHO ---
     const customCursor = document.querySelector('.custom-cursor');
