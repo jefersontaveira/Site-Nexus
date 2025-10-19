@@ -442,7 +442,7 @@ section {
     padding: 2.5rem 2rem;
     border-radius: 8px;
     border-left: 5px solid var(--color-primary);
-    min-height: 200px; /* Altura mínima para não "pular" */
+    min-height: 450px;
     
     display: flex;
     flex-direction: column;
@@ -493,17 +493,16 @@ section {
     display: flex;
     flex-wrap: nowrap; /* Impede a quebra de linha (ESSENCIAL) */
     align-items: center; /* Centraliza os logos verticalmente */
-    justify-content: center;
+    justify-content: cenflex-start;
     
     overflow-x: auto; /* Permite o scroll horizontal */
     scroll-behavior: smooth; 
     scroll-snap-type: x mandatory; 
     
     gap: 1.5rem;
-    padding: 0 1rem; /* Padding interno para os logos respirarem */
 
     /* OCUPA O ESPAÇO CENTRAL */
-    width: 75%;
+    width: calc(750px + 2.6rem);
     
     /* Esconde a barra de scroll feia */
     -ms-overflow-style: none;  /* IE and Edge */
