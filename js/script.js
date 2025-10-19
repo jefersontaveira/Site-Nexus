@@ -233,4 +233,27 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Erro no Slider: Elementos (logoGrid, prevBtn, ou nextBtn) não foram encontrados. Verifique os IDs no HTML.");
     }
 
+    
+    // --- 11. EFEITO DE HEADER ENCOLHENDO NO SCROLL ---
+
+    const header = document.querySelector('.main-header');
+    const scrollThreshold = 50; // Quantos pixels rolar antes de encolher (ajuste se quiser)
+
+    // Função que verifica o scroll e aplica/remove a classe
+    function handleScroll() {
+        if (window.scrollY > scrollThreshold) {
+            // Se rolou mais que o threshold, adiciona a classe
+            header.classList.add('header-scrolled');
+        } else {
+            // Se voltou para o topo, remove a classe
+            header.classList.remove('header-scrolled');
+        }
+    }
+
+    // Adiciona o listener de scroll na janela
+    window.addEventListener('scroll', handleScroll);
+
+    // Verifica o estado inicial ao carregar (caso a página já carregue rolada)
+    handleScroll();
+
 }); // <-- FIM DO 'DOMContentLoaded'

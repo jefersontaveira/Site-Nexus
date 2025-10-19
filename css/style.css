@@ -113,6 +113,7 @@ section {
     background-color: rgba(26, 26, 26, 0.8);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--color-bg-light);
+    transition: padding 0.4s ease, background-color 0.4s ease;
 }
 
 .navbar {
@@ -128,6 +129,7 @@ section {
     display: inline-block;
     text-decoration: none;
     max-width: 250px;
+    transition: max-width 0.4s ease;
 }
 
 .logo img {
@@ -135,7 +137,9 @@ section {
     width: 100%; /* Faz a imagem ocupar a largura do link pai (.logo) */
     height: auto; /* Mantém a proporção */
     animation: neonPulse 6s ease-in-out infinite; /* Nome, Duração, Easing, Repetição */
+    transition: transform 0.4s ease;
 }
+
 
 /* --- ANIMAÇÃO DE PULSO NEON PARA A LOGO --- */
 @keyframes neonPulse {
@@ -163,13 +167,33 @@ section {
     color: var(--color-text);
     text-decoration: none;
     font-weight: 400;
-    transition: color 0.3s ease;
     white-space: nowrap;
+    transition: color 0.3s ease;;
 }
 
 .nav-menu a:hover {
     color: var(--color-primary);
 }
+
+/* --- ESTILOS DO HEADER QUANDO ROLADO --- */
+
+.header-scrolled {
+    /* Diminui o padding vertical */
+    padding: 0.5rem 0; 
+    
+    /* Aumenta a transparência */
+    background-color: rgba(26, 26, 26, 0.7); 
+    
+    /* Adiciona uma sombra sutil */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.header-scrolled .logo {
+    /* Diminui o tamanho da logo */
+    max-width: 150px; 
+}
+
+
 
 .hamburger-menu {
     display: none; /* Escondido em desktops */
