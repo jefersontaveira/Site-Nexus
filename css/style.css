@@ -30,14 +30,13 @@ body {
     color: var(--color-text);
     line-height: 1.6;
 
-    background-image: repeating-radial-gradient(
-        circle at center,
-        rgba(248, 248, 248, 0.082) 0, /* Cor do ponto (muito sutil) */
-        rgba(255, 255, 255, 0.05) 1px,
-        transparent 1px, /* O resto é transparente */
-        transparent 40px /* Espaçamento entre os pontos */
-    );
-    background-size: 4000px 4000px; /* Tamanho da repetição do padrão */
+    background-image: repeating-linear-gradient(
+    45deg, 
+    transparent, 
+    transparent 2px, 
+    rgba(255, 255, 255, 0.03) 2px, 
+    rgba(255, 255, 255, 0.03) 3px
+);
 }
 
 /* Efeito de Cursor Sutil com Brilho */
@@ -204,12 +203,68 @@ section {
 
 /* --- 4. SEÇÃO HERO     --- */
 .hero-section {
+    position: relative;
+    overflow: hidden;
+    
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.9)), url('https://via.placeholder.com/1920x1080/1a1a1a/000000.png?text=Background+Image') no-repeat center center/cover;
+}
+
+/* Garante que o conteúdo (h1, p, btn) fique ACIMA do scanner */
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px; /* A espessura da linha principal */
+    z-index: 1;
+    
+    /* A "luz" do scanner usa sua cor primária */
+    background-color: var(--color-primary);
+    
+    /* O "brilho" (glow) da linha */
+    box-shadow: 0 0 20px 5px var(--color-primary);
+    
+    /* Animação */
+    animation: scan 10s infinite linear;
+}
+
+@keyframes scan {
+    /* O scanner começa invisível no topo
+       e fica assim por 80% do tempo (8 segundos). 
+    */
+    0% {
+        top: -10px;
+        opacity: 0;
+    }
+    70% {
+        top: -10px;
+        opacity: 0;
+    }
+    
+    /* Em 85% (meio segundo depois), ele aparece de repente 
+       no topo com brilho total. 
+    */
+    71% {
+        top: -10px;
+        opacity: 0.7; /* Ou a opacidade que preferir */
+    }
+    
+    /* Nos 15% restantes (1.5 segundos), ele desce 
+       rápido para 100% da tela e desaparece. 
+    */
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
 }
 
 .hero-title {
@@ -225,6 +280,7 @@ section {
     margin: 0 auto 2rem;
     color: var(--color-text-secondary);
 }
+
 
 /* --- 5. SEÇÃO DE SERVIÇOS --- */
 .services-section {
