@@ -91,15 +91,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 5. MENU MOBILE (HAMBURGER) ---
-    const hamburger = document.querySelector('.hamburger-menu');
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+    const navToggle = document.querySelector('.nav-toggle');
+
+    // 1. Ação de Abrir/Fechar o Menu
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            // Adiciona/Remove a classe 'is-active' em ambos
+            navToggle.classList.toggle('is-active');
+            navMenu.classList.toggle('is-active');
+            
+            // Bônus: Impede o scroll da página quando o menu está aberto
+            document.body.classList.toggle('no-scroll');
         });
     }
 
-   // --- 8. ANIMAÇÃO DE LINHA DO TEMPO (VERSÃO CORRIGIDA E OTIMIZADA) ---
+    // 2. Ação de fechar o menu ao clicar em um link
 
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navToggle.classList.remove('is-active');
+            navMenu.classList.remove('is-active');
+            document.body.classList.remove('no-scroll');
+        });
+    });
+
+   // --- 8. ANIMAÇÃO DE LINHA DO TEMPO ---
     const timelineSteps = document.querySelectorAll('.timeline-step');
     const processCards = document.querySelectorAll('.process-card');
     const timelineOrb = document.querySelector('.timeline-orb');
@@ -233,9 +249,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Erro no Slider: Elementos (logoGrid, prevBtn, ou nextBtn) não foram encontrados. Verifique os IDs no HTML.");
     }
 
-    
-    // --- 11. EFEITO DE HEADER ENCOLHENDO NO SCROLL ---
 
+    // --- 11. EFEITO DE HEADER ENCOLHENDO NO SCROLL ---
     const header = document.querySelector('.main-header');
     const scrollThreshold = 50; // Quantos pixels rolar antes de encolher (ajuste se quiser)
 

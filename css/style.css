@@ -193,14 +193,6 @@ section {
 }
 
 
-
-.hamburger-menu {
-    display: none; /* Escondido em desktops */
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
 /* --- 4. SEÇÃO HERO     --- */
 .hero-section {
     position: relative;
@@ -518,7 +510,7 @@ section {
     left: 0; 
     
     transform: translateY(-50%);
-    z-index: 3; /* Fica sobre tudo */
+    z-index: 0; /* Fica sobre tudo */
     
     /* A MÁGICA DA ANIMAÇÃO! */
     transition: left 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -1099,104 +1091,3 @@ section {
 }
 
 
-/* --- 12. RESPONSIVIDADE (MEDIA QUERIES) --- */
-
-@media (max-width: 768px) {
-    /* ... (suas regras de mobile/tablet permanecem aqui) ... */
-
-    /* Por exemplo: */
-    .nav-menu {
-        display: none; 
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 100%; 
-        left: 0;
-        background-color: rgba(26, 26, 26, 0.95);
-        border-top: 1px solid var(--color-bg-light);
-        padding: 1rem 0;
-    }
-    .nav-menu.active {
-        display: flex;
-    }
-    .nav-menu li {
-        text-align: center;
-        margin: 0.5rem 0;
-    }
-    .hamburger-menu {
-        display: block; 
-        z-index: 10; 
-    }
-    .hamburger-menu span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background-color: var(--color-text);
-        margin: 5px 0;
-        transition: all 0.3s ease;
-    }
-    .hero-title {
-        font-size: 2.5rem;
-    }
-
-    /* Regras para o processo no mobile */
-    .process-wrapper,
-    .process-wrapper.process-left,
-    .process-wrapper.process-right {
-        justify-content: center;
-    }
-    .process-step {
-        width: 90%;
-    }
-    #timeline-svg {
-        display: none;
-    }
-}
-
-
-/* --- Este é o bloco que você pediu --- */
-@media (min-width: 768px) {
-    
-    /* Regras da Seção Sobre */
-    .about-container {
-        flex-direction: row;
-        text-align: left;
-    }
-    .about-image, .about-text {
-        flex: 1;
-    }
-
-    /* Regras da Seção de Contato */
-    .contact-wrapper {
-        flex-direction: row;
-    }
-    .contact-info, .contact-form {
-        flex: 1;
-    }
-
-    /* --- Novas Regras da Seção de Processo --- */
-    .process-wrapper {
-        justify-content: space-between; /* Ajuste para espaçar bem */
-        align-items: flex-start; /* Alinha os cards ao topo de seu wrapper */
-        margin-bottom: 0; /* Remove a margem extra */
-    }
-
-    .process-step {
-        width: 40%; /* Reduz a largura para deixar espaço para a linha */
-        margin-top: 0;
-        margin-bottom: 0;
-        padding: 2.5rem 2rem; /* Retorna o padding original para os cards */
-    }
-
-    /* Passos à esquerda */
-    .process-wrapper.process-left {
-        justify-content: flex-start; /* Garante alinhamento à esquerda */
-        padding-right: 10%; /* Empurra o card da esquerda mais para a esquerda, liberando espaço central */
-    }
-    
-    /* Passos à direita */
-    .process-wrapper.process-right {
-        justify-content: flex-end; /* Garante alinhamento à direita */
-        padding-left: 10%; /* Empurra o card da direita mais para a direita */
-    }
-}

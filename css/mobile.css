@@ -1,0 +1,229 @@
+
+/* --- 12. RESPONSIVIDADE (MEDIA QUERIES) --- */
+
+.nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    width: 28px;
+    height: 22px;
+    position: relative; /* Para posicionar as linhas span */
+    z-index: 1001; /* Acima do menu mobile */
+    transition: all 0.3s ease, width 0.4s ease, height 0.4s ease;
+}
+
+/* Estilo das 3 linhas do hamburger */
+.nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-text);
+    border-radius: 3px;
+    position: absolute;
+    left: 0;
+    transition: all 0.3s ease;
+}
+
+/* 2. Define o novo tamanho do botão QUANDO o header tiver a classe 'header-scrolled' */
+.header-scrolled .nav-toggle {
+    width: 22px;  /* Largura menor (original era 28px) */
+    height: 18px; /* Altura menor (original era 22px) */
+}
+
+/* 3. Ajusta as linhas de dentro do botão */
+.header-scrolled .nav-toggle span {
+    height: 2px; /* Linhas mais finas (original era 3px) */
+}
+
+.header-scrolled .nav-toggle.is-active span:nth-child(1) {
+    /* Ajusta a translação para a nova posição (7px ao invés de 9px) */
+    transform: translateY(7px) rotate(45deg);
+}
+
+.header-scrolled .nav-toggle.is-active span:nth-child(3) {
+    /* Ajusta a translação para a nova posição (-7px ao invés de -9px) */
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* 4. Re-posiciona as linhas no novo tamanho (encolhido) */
+.header-scrolled .nav-toggle span:nth-child(1) {
+    top: 0;
+}
+.header-scrolled .nav-toggle span:nth-child(2) {
+    top: 7px; /* (Original era 9px) */
+}
+.header-scrolled .nav-toggle span:nth-child(3) {
+    top: 14px; /* (Original era 18px) */
+}
+
+.nav-toggle span:nth-child(1) {
+    top: 0;
+}
+.nav-toggle span:nth-child(2) {
+    top: 9px; /* Posição da linha do meio */
+}
+.nav-toggle span:nth-child(3) {
+    top: 18px; /* Posição da linha de baixo */
+}
+
+
+
+@media (max-width: 768px) {
+    /* ... (suas regras de mobile/tablet permanecem aqui) ... */
+
+
+    /*Configurações gerais mobile*/
+    * {
+        cursor: auto !important;
+    }
+
+    html.no-scroll,
+    body.no-scroll {
+        overflow: hidden;
+    }
+
+    .custom-cursor {
+        display: none !important;
+    }
+
+    /* Ajusta o padding das seções */
+    section {
+        padding: 4rem 0;
+    }
+
+    /* Ajusta o tamanho do título da seção */
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+
+    /* --- Ajustes do Header e Logo --- */
+    .main-header {
+        /* Garante que o padding não fique muito pequeno */
+        padding: 1rem 0;
+    }
+
+    .logo {
+        /* Reduz o tamanho base da logo no mobile */
+        max-width: 180px; 
+    }
+
+    /* Mantém a logo 'scrolled' pequena */
+    .header-scrolled .logo {
+        max-width: 150px; 
+    }
+
+    /* MENU TOGGLE */
+    /* 1. Mostra o botão hamburger */
+    .nav-toggle {
+        display: block;
+    }
+
+    /* 2. Esconde o menu desktop e o transforma em menu fullscreen */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        /* Começa fora da tela (à direita) */
+        right: -100%; 
+        width: 100%;
+        height: 100vh; /* Altura total da tela */
+        
+        /* Layout vertical */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem; /* Aumenta o espaço entre os links */
+
+        /* Fundo escuro com blur */
+        background-color: rgba(26, 26, 26, 0.95);
+        backdrop-filter: blur(10px);
+        
+        /* Animação de entrada */
+        transition: right 0.4s ease-in-out;
+        z-index: 1000; /* Fica abaixo do botão toggle */
+    }
+
+    /* 3. Classe 'is-active' que o JS vai adicionar */
+    .nav-menu.is-active {
+        right: 0; /* Puxa o menu para a tela */
+    }
+
+    /* 4. Aumenta o tamanho dos links no menu aberto */
+    .nav-menu a {
+        font-size: 1.5rem; /* Fonte maior para fácil clique */
+        font-weight: 600;
+    }
+    
+    /* 5. Animação do Hamburger para "X" */
+    .nav-toggle.is-active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+    .nav-toggle.is-active span:nth-child(2) {
+        opacity: 0; /* Esconde a linha do meio */
+    }
+    .nav-toggle.is-active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    /* Regras para o processo no mobile */
+    .process-wrapper,
+    .process-wrapper.process-left,
+    .process-wrapper.process-right {
+        justify-content: center;
+    }
+    .process-step {
+        width: 90%;
+    }
+    #timeline-svg {
+        display: none;
+    }
+
+    /* --- 4. SEÇÃO HERO     --- */
+    .hero-section {
+        text-align: center;
+        padding-top: 150px;
+    }
+
+    .hero-title {
+        /* Redução significativa da fonte */
+        font-size: 2rem; /* Original era 3.5rem */
+        line-height: 1.3; /* Melhora a leitura em múltiplas linhas */
+    }
+
+    .hero-subtitle {
+        font-size: 1.05rem; /* Original era 1.2rem */
+
+        max-width: 95%; 
+        margin-bottom: 2.5rem; 
+    }
+
+    /* --- 5. SEÇÃO SERVIÇOS     --- */
+    .services-grid {
+        /* Reduz o espaço entre os cards no mobile */
+        gap: 1.5rem;
+    }
+
+    .service-card {
+        /* Reduz o padding interno para dar mais espaço ao texto */
+        padding: 2rem 1.5rem;
+    }
+
+    /* Desabilita o efeito de "pular" no toque */
+    .service-card:hover {
+        transform: none;
+    }
+
+    .service-icon {
+        font-size: 2.2rem; /* Original: 2.5rem */
+    }
+
+    .service-card h3 {
+        font-size: 1.3rem; /* Original: 1.5rem */
+    }
+}
