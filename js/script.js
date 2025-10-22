@@ -162,6 +162,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Roda a função de inicialização
     initializeTimeline();
 
+
+    // --- 9. CONTROLE DO ACCORDION (PROCESSO MOBILE) ---
+    const accordionHeaders = document.querySelectorAll('.process-section-mobile .accordion-header');
+
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            // Pega o 'pai' (o .accordion-item) do botão que foi clicado
+            const currentItem = header.parentElement;
+
+            // 1. Fecha TODOS os *outros* itens
+            document.querySelectorAll('.process-section-mobile .accordion-item').forEach(item => {
+                // Se o item do loop NÃO for o que eu cliquei...
+                if (item !== currentItem) {
+                    // ...remove a classe 'active' dele.
+                    item.classList.remove('active');
+                }
+            });
+
+            // 2. Agora, 'alterna' (toggle) o item que eu cliquei
+            // Se ele tinha 'active', remove.
+            // Se ele não tinha 'active', adiciona.
+            currentItem.classList.toggle('active');
+        });
+    });
+    
+
     const logoItems = document.querySelectorAll('.logo-item');
     const testimonialTextDisplay = document.getElementById('testimonial-text-display');
     const testimonialAuthorDisplay = document.getElementById('testimonial-author-display');

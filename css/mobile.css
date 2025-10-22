@@ -67,6 +67,12 @@
 }
 
 
+/* --- Seção processos --- */
+.process-section-mobile {
+    display: none;
+}
+
+
 
 @media (max-width: 768px) {
     /* ... (suas regras de mobile/tablet permanecem aqui) ... */
@@ -226,6 +232,17 @@
     .service-card h3 {
         font-size: 1.3rem; /* Original: 1.5rem */
     }
+
+
+    /* --- Seção processos --- */
+    .process-section-mobile {
+        display: block; /* Esconde a versão mobile (accordion) */
+    }
+    .process-section {
+        display: none; /* Mostra a versão desktop (timeline) */
+    }
+
+    
 
 
 

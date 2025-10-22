@@ -554,6 +554,115 @@ section {
     color: var(--color-primary);
 }
 
+/* --- 7B. SEÇÃO PROCESSO (VERSÃO MOBILE/TABLET) --- */
+.process-section-mobile {
+    background-color: var(--color-bg-light);
+}
+
+.process-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espaço entre os itens */
+}
+
+.accordion-item {
+    background-color: var(--color-bg);
+    border-radius: 8px;
+    border: 1px solid #444;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-header {
+    /* Reseta o botão */
+    background: transparent;
+    border: none;
+    padding: 1.5rem;
+    width: 100%;
+    
+    /* Layout Flex */
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+    /* Fontes */
+    color: var(--color-text);
+    font-family: var(--font-family);
+    text-align: left;
+    
+    cursor: pointer;
+}
+
+.accordion-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-text); /* Cor padrão */
+    transition: color 0.3s ease;
+}
+
+.accordion-icon {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    transition: color 0.3s ease;
+}
+
+/* Ícone de +/- (o "toggle") */
+.accordion-toggle-icon {
+    margin-left: auto; /* Mágica para empurrar para a direita */
+    font-size: 1.5rem;
+    color: var(--color-text-secondary);
+    transition: transform 0.3s ease;
+}
+
+.accordion-toggle-icon::before {
+    content: '+'; /* Começa como '+' */
+}
+
+/* Conteúdo que expande/contrai */
+.accordion-content {
+    max-height: 0; /* Começa fechado */
+    overflow: hidden;
+
+    /* Movemos o padding lateral para cá */
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+
+    /* Definimos o padding vertical como 0 quando fechado */
+    padding-top: 0;
+    padding-bottom: 0;
+    
+    transition: max-height 0.4s ease-out, padding-top 0.4s ease-out, padding-bottom 0.4s ease-out;
+}
+
+.accordion-content p {
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.7;
+}
+
+
+/* --- ESTADOS ATIVOS (Controlado pelo JS) --- */
+.accordion-item.active {
+    background-color: var(--color-bg); /* Pode escurecer se quiser */
+    border-color: var(--color-primary);
+}
+
+.accordion-item.active .accordion-header h3,
+.accordion-item.active .accordion-icon {
+    color: var(--color-primary); /* Muda a cor do título e ícone */
+}
+
+.accordion-item.active .accordion-toggle-icon {
+    color: var(--color-primary);
+    transform: rotate(45deg); /* Gira o '+' para 'x' */
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 200px; /* Altura para expandir (ajuste se o texto for maior) */
+    padding-top: 0.5; /* Evita pulo de padding */
+    padding-bottom: 1.5rem;
+}
+
 
 /* --- 8. SEÇÃO DEPOIMENTOS --- */
 
