@@ -193,6 +193,14 @@ section {
 }
 
 
+
+.hamburger-menu {
+    display: none; /* Escondido em desktops */
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 /* --- 4. SEÇÃO HERO     --- */
 .hero-section {
     position: relative;
@@ -912,6 +920,14 @@ section {
     overflow: hidden;
 }
 
+/* Regras da Seção de Contato */
+.contact-wrapper {
+    flex-direction: row;
+}
+.contact-info, .contact-form {
+    flex: 1;
+}
+
 .contact-info h3 {
     font-size: 1.8rem;
     color: var(--color-primary);
@@ -1081,6 +1097,9 @@ section {
         opacity: 0.8;
     }
 }
+
+
+
 
 .main-footer {
     display: flex;

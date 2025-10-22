@@ -226,4 +226,27 @@
     .service-card h3 {
         font-size: 1.3rem; /* Original: 1.5rem */
     }
+
+
+
+
+
+    /* --- 7. SEÇÃO FORMULÁRIO     --- */
+
+    .contact-wrapper {
+        /* 1. Força o layout de coluna no mobile */
+        flex-direction: column;
+
+        /* 2. Reduz o padding para o conteúdo respirar */
+        padding: 1.5rem;
+        
+        /* 3. Reduz o espaço entre os blocos (info e form) */
+        gap: 2rem;
+    }
+
+    .contact-info h3 {
+        /* 4. Ajusta levemente o título */
+        font-size: 1.5rem; 
+    }
+    
 }
