@@ -242,13 +242,69 @@
         display: none; /* Mostra a versão desktop (timeline) */
     }
 
+    /* --- 7. Seção de Depoimentos --- */
+
+    /* 1. Ajusta o Card de Texto Principal */
+    .testimonial-display-card {
+        min-height: auto; 
+        padding: 2rem 1.5rem;
+        margin-bottom: 2rem; 
+        max-width: 90%; 
+    }
+
+    .testimonial-text {
+        font-size: 1.1rem; /* Reduz o tamanho da citação */
+        line-height: 1.6;
+    }
+
+    .testimonial-author cite {
+        font-size: 1rem;
+    }
+     .testimonial-author span {
+        font-size: 0.9rem;
+    }
+
+    /* 2. Ajusta o Slider */
+    #testimonial-line {
+        /* Garante que ocupe a largura disponível */
+        width: 100%; 
+        /* Reduz o gap entre setas e slider */
+        gap: 10px; 
+    }
+
+    /* 3. Ajusta a "Janela" para mostrar MENOS itens */
+    .testimonial-slider-container {
+        width: 100%; /* << AJUSTE ESTE VALOR para o visual desejado */
+    }
+
+    /* 4. Ajusta o Tamanho do Item (opcional) */
+    /* Se 180px for muito grande no celular, reduza aqui */
+    .logo-item {
+         width: 70px; /* Exemplo: Reduzido para 150px */
+    }
+    
+    /* 5. Ajusta o Padding Top (se reduziu o item) */
+    .testimonial-logo-grid {
+        /* Mantém o espaço para a imagem vazar */
+        padding-top: 0.2rem; /* Reduz um pouco */
+        gap: 1rem; /* Reduz o gap se reduziu o item */
+    }
+    
+    /* 6. Ajusta os Botões */
+    .slider-btn {
+        width: 35px; /* Menor */
+        height: 35px; /* Menor */
+        font-size: 0.5rem; /* Ícone menor */
+    }
+
+
     
 
 
 
 
 
-    /* --- 7. SEÇÃO FORMULÁRIO     --- */
+    /* --- 8. SEÇÃO FORMULÁRIO     --- */
 
     .contact-wrapper {
         /* 1. Força o layout de coluna no mobile */
