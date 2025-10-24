@@ -106,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 2. Ação de fechar o menu ao clicar em um link
-
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             navToggle.classList.remove('is-active');
@@ -188,91 +187,137 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 
-    const logoItems = document.querySelectorAll('.logo-item');
-    const testimonialTextDisplay = document.getElementById('testimonial-text-display');
-    const testimonialAuthorDisplay = document.getElementById('testimonial-author-display');
+    /* --- 10. LÓGICA DE DEPOIMENTOS (VERSÃO FINAL CORRIGIDA) --- */
 
-    // Adiciona o 'listener' de HOVER (mouseenter) para cada logo
-    logoItems.forEach(logo => {
-        logo.addEventListener('mouseenter', () => {
-            
-            // 1. Pega os dados do logo em que o mouse entrou
-            const newText = logo.getAttribute('data-text');
-            const newAuthor = logo.getAttribute('data-author');
-            const newCompany = logo.getAttribute('data-company');
-
-            // 2. Desativa TODOS os logos
-            logoItems.forEach(item => item.classList.remove('active'));
-            
-            // 3. Ativa apenas o logo atual
-            logo.classList.add('active');
-
-            // 4. Efeito de fade-out no texto antigo
-            testimonialTextDisplay.style.opacity = 0;
-            testimonialAuthorDisplay.style.opacity = 0;
-
-            // 5. Espera a animação de fade-out terminar (0.15s)
-            setTimeout(() => {
-                // Atualiza o conteúdo do card de destaque
-                testimonialTextDisplay.textContent = newText;
-                testimonialAuthorDisplay.innerHTML = `
-                    <cite>${newAuthor}</cite>
-                    <span>${newCompany}</span>
-                `;
-                
-                // 6. Efeito de fade-in no texto novo
-                testimonialTextDisplay.style.opacity = 1;
-                testimonialAuthorDisplay.style.opacity = 1;
-            }, 150); // 150ms (metade da transição de 0.3s)
-        });
-    });
-
-    // --- 10. CONTROLES DO SLIDER DE LOGOS (VERSÃO REVISADA) ---
-    // (Certifique-se que isso está DENTRO do 'DOMContentLoaded')
-
-    const logoGrid = document.querySelector('.testimonial-logo-grid');
+    const sliderContainer = document.querySelector('.testimonial-slider-container');
+    const grid = document.querySelector('.testimonial-logo-grid');
     const prevBtn = document.getElementById('logo-prev');
     const nextBtn = document.getElementById('logo-next');
+    const textDisplay = document.getElementById('testimonial-text-display');
+    const authorDisplay = document.getElementById('testimonial-author-display');
 
-    // Adicionamos uma verificação mais robusta
-    if (logoGrid && prevBtn && nextBtn) {
+    if (grid && prevBtn && nextBtn && textDisplay && authorDisplay) {
+
+        const originalItems = grid.querySelectorAll('.logo-item');
+        const totalItems = originalItems.length; // (ex: 5)
         
-        // Função de scroll simplificada
-        function scrollSlider(direction) {
-            // Pega a largura visível da grade (o espaço que vemos)
-            const gridWidth = logoGrid.clientWidth; 
-            
-            // Calcula quanto rolar (80% da largura visível)
-            const scrollAmount = gridWidth * 0.8;
-            
-            if (direction === 'next') {
-                console.log("Scroll Next:", scrollAmount); // Log para debug
-                logoGrid.scrollBy({
-                    left: scrollAmount,
-                    behavior: 'smooth'
-                });
-            } else {
-                console.log("Scroll Prev:", -scrollAmount); // Log para debug
-                logoGrid.scrollBy({
-                    left: -scrollAmount,
-                    behavior: 'smooth'
-                });
-            }
-        }
+        let isMoving = false;
+        let currentIndex = 0; // Começa no índice 0
+        
+        const authorCite = authorDisplay.querySelector('cite');
+        const authorSpan = authorDisplay.querySelector('span');
 
-        // Evento do botão "Próximo"
-        nextBtn.addEventListener('click', () => {
-            scrollSlider('next');
+        // --- PASSO 1: CLONAGEM ---
+        originalItems.forEach(item => {
+            const clone = item.cloneNode(true);
+            clone.classList.remove('active');
+            grid.appendChild(clone);
         });
 
-        // Evento do botão "Anterior"
+        // 'items' agora tem 10 (originais + clones)
+        const items = grid.querySelectorAll('.logo-item');
+
+        
+        // --- LÓGICA 1: MUDAR O TEXTO E O .ACTIVE (Sua função) ---
+        function updateTestimonial(activeItem) {
+            items.forEach(item => item.classList.remove('active'));
+            activeItem.classList.add('active');
+            const newText = activeItem.getAttribute('data-text');
+            const newAuthor = activeItem.getAttribute('data-author');
+            const newCompany = activeItem.getAttribute('data-company');
+            textDisplay.style.opacity = '0';
+            authorDisplay.style.opacity = '0';
+            setTimeout(() => {
+                textDisplay.textContent = newText;
+                authorCite.textContent = newAuthor;
+                authorSpan.textContent = newCompany;
+                textDisplay.style.opacity = '1';
+                authorDisplay.style.opacity = '1';
+            }, 300);
+        }
+        
+        // Adiciona o listener de clique a TODOS os 10 itens
+        items.forEach((item) => {
+            // 1. NOVO: Adiciona o listener de HOVER (passar o mouse)
+            item.addEventListener('mouseenter', () => {
+                // Chama a sua função de atualizar o texto
+                updateTestimonial(item);
+            });
+
+            // 2. O listener de CLIQUE (mantém para mobile/acessibilidade)
+             item.addEventListener('click', () => {
+                 // O clique também atualiza
+             updateTestimonial(item);
+             });
+        });
+
+        
+        // --- LÓGICA 2: MOVER O CARROSSEL (Lógica de "loop") ---
+
+        function getItemWidth() {
+            const firstItem = grid.querySelector('.logo-item');
+            if (!firstItem) return 0;
+            const gap = parseFloat(window.getComputedStyle(grid).gap) || 0;
+            return firstItem.offsetWidth + gap;
+        }
+
+        // --- Botão NEXT (Avançar) ---
+        nextBtn.addEventListener('click', () => {
+            if (isMoving) return;
+            isMoving = true;
+            
+            const itemWidth = getItemWidth();
+            currentIndex++; 
+
+            grid.style.transition = 'transform 0.5s ease-in-out';
+            grid.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+
+            // *** AQUI ESTÁ A CORREÇÃO ***
+            // Atualiza a UI para o slide que *está entrando*
+            updateTestimonial(items[currentIndex]); 
+            
+            grid.addEventListener('transitionend', () => {
+                if (currentIndex === totalItems) { 
+                    setTimeout(() => {
+                        grid.style.transition = 'none'; 
+                        grid.style.transform = 'translateX(0)'; 
+                        currentIndex = 0; 
+                    }, 0); 
+                }
+                isMoving = false;
+            }, { once: true });
+        });
+
+        // --- Botão PREV (Voltar) ---
         prevBtn.addEventListener('click', () => {
-            scrollSlider('prev');
+            if (isMoving) return;
+            isMoving = true;
+
+            const itemWidth = getItemWidth();
+
+            if (currentIndex === 0) {
+                currentIndex = totalItems; 
+                grid.style.transition = 'none';
+                grid.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+                grid.offsetHeight; 
+            }
+            
+            currentIndex--; 
+
+            // *** AQUI ESTÁ A CORREÇÃO ***
+            // Atualiza a UI para o slide que *está entrando*
+            updateTestimonial(items[currentIndex]); 
+
+            grid.style.transition = 'transform 0.5s ease-in-out';
+            grid.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+
+            grid.addEventListener('transitionend', () => {
+                isMoving = false;
+            }, { once: true });
         });
 
     } else {
-        // Log de erro para sabermos se os elementos não foram encontrados
-        console.error("Erro no Slider: Elementos (logoGrid, prevBtn, ou nextBtn) não foram encontrados. Verifique os IDs no HTML.");
+        console.error("Erro no Slider de Depoimentos: Um ou mais elementos não foram encontrados.");
     }
 
 
