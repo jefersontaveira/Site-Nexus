@@ -25,6 +25,9 @@ html {
 
 
 body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE e Edge legado */
+
     font-family: var(--font-family);
     background-color: var(--color-bg);
     color: var(--color-text);
@@ -36,7 +39,11 @@ body {
     transparent 2px, 
     rgba(255, 255, 255, 0.03) 2px, 
     rgba(255, 255, 255, 0.03) 3px
-);
+    );
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Esconde a barra */
 }
 
 /* Efeito de Cursor Sutil com Brilho */
