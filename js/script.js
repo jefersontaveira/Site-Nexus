@@ -114,7 +114,106 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-   // --- 8. ANIMAÇÃO DE LINHA DO TEMPO ---
+    /* --- 3. EFEITOS DO PORTFÓLIO (HÍBRIDO: HOVER/AUTO-SCROLL) --- */
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches; // Verifica se é mobile
+
+    // --- Lógica de Hover (SÓ PARA DESKTOP) ---
+    if (!isMobile && portfolioItems.length > 0) {
+        const siteItemsDesktop = document.querySelectorAll('.portfolio-item.item-type-site');
+        const scrollSpeed = 100; // Pixels por segundo (para hover)
+
+        siteItemsDesktop.forEach(item => {
+            const img = item.querySelector('img');
+
+            // Função para calcular e aplicar hover
+            const applyHoverEffect = () => {
+                const cardHeight = item.clientHeight;
+                const imgHeight = img.clientHeight;
+                const moveDistance = Math.max(0, imgHeight - cardHeight);
+
+                item.addEventListener('mouseenter', () => {
+                    if (moveDistance > 0) {
+                        const durationMs = (moveDistance / scrollSpeed) * 1000;
+                        img.style.transition = `transform ${durationMs}ms ease-in-out`;
+                        img.style.transform = `translateY(-${moveDistance}px)`;
+                    }
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    img.style.transition = 'transform 0.5s ease-in-out';
+                    img.style.transform = 'translateY(0)';
+                });
+            };
+
+            // Aplica o efeito após carregar ou se já carregada
+            if (img.complete && img.naturalHeight > 0) {
+                applyHoverEffect();
+            } else {
+                img.addEventListener('load', applyHoverEffect);
+            }
+        });
+    }
+
+    // --- Lógica de Auto-Scroll (SÓ PARA MOBILE) ---
+    if (isMobile && portfolioItems.length > 0) {
+        const siteItemsMobile = document.querySelectorAll('.portfolio-item.item-type-site');
+
+        // Cria o Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const item = entry.target;
+                const img = item.querySelector('img');
+
+                if (entry.isIntersecting) {
+                    // Elemento ENTROU na tela
+
+                    // Função para calcular distância e iniciar animação
+                    const startAnimation = () => {
+                        const cardHeight = item.clientHeight;
+                        const imgHeight = img.clientHeight;
+                        const moveDistance = Math.max(0, imgHeight - cardHeight);
+
+                        // Define a variável CSS que a animação vai usar
+                        item.style.setProperty('--scroll-distance', `-${moveDistance}px`);
+                        
+                        // Adiciona a classe que ativa a animação no CSS
+                        item.classList.add('is-visible'); 
+                    };
+
+                    // Garante que a imagem carregou antes de calcular
+                    if (img.complete && img.naturalHeight > 0) {
+                        startAnimation();
+                    } else {
+                        // Se não carregou ainda, espera o 'load'
+                        // Usamos { once: true } para não adicionar múltiplos listeners
+                        img.addEventListener('load', startAnimation, { once: true });
+                    }
+
+                } else {
+                    // Elemento SAIU da tela
+                    item.classList.remove('is-visible'); // Pausa a animação via CSS
+                }
+            });
+        }, {
+            threshold: 0.1 // Ativa quando 10% do item estiver visível
+        });
+
+        // Observa cada item de site no mobile
+        siteItemsMobile.forEach(item => {
+            observer.observe(item);
+        });
+    }
+
+
+
+
+
+
+
+
+
+    // --- 8. ANIMAÇÃO DE LINHA DO TEMPO ---
     const timelineSteps = document.querySelectorAll('.timeline-step');
     const processCards = document.querySelectorAll('.process-card');
     const timelineOrb = document.querySelector('.timeline-orb');

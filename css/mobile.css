@@ -323,3 +323,75 @@
     }
     
 }
+
+
+
+
+/* --- RESPONSIVIDADE (Exemplo) --- */
+@media (max-width: 768px) {
+
+    .portfolio-filters {
+        margin-bottom: 2rem;
+    }
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        margin: 0 0.3rem 0.5rem; /* Permite quebrar linha */
+        font-size: 0.85rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+    }
+
+    .portfolio-item {
+        height: 280px; /* Altura ligeiramente maior no mobile */
+    }
+    
+    .portfolio-info {
+        padding: 2rem 1rem 1rem;
+    }
+     .portfolio-info h3 { font-size: 1rem; }
+     .portfolio-info p { font-size: 0.85rem; }
+
+    /* --- Efeito Mobile para Sites (Auto-Scroll) --- */
+    /* Prepara a imagem para a animação */
+    .portfolio-item.item-type-site img {
+        transition: none !important; /* Remove transição de hover */
+        transform: translateY(0); /* Estado inicial */
+        animation-name: autoScrollImage;
+        animation-duration: 8s; /* Ajuste a duração */
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-play-state: paused; /* Começa pausada */
+    }
+
+    /* Animação roda quando visível (classe do JS) */
+    .portfolio-item.item-type-site.is-visible img {
+        animation-play-state: running;
+    }
+
+    /* Pausa no toque */
+    .portfolio-item.item-type-site:active img {
+        animation-play-state: paused;
+    }
+    
+    /* Efeito de Zoom para Mídia no Toque */
+    .portfolio-item.item-type-media:active img {
+         transform: scale(1.1);
+    }
+}
+
+/* --- Keyframes da Animação de Scroll Mobile --- */
+@keyframes autoScrollImage {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        /* Usa a variável --scroll-distance definida pelo JS */
+        transform: translateY(var(--scroll-distance, 0px)); 
+    }
+    100% {
+        transform: translateY(0); /* Volta para o início */
+    }
+}
