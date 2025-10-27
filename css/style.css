@@ -911,6 +911,7 @@ section {
     transform: translateY(100%); /* Começa "abaixo" do card */
     transition: opacity 0.4s ease, transform 0.4s ease;
     pointer-events: none; /* Permite clicar na imagem por baixo */
+    text-align: start;
 }
 
 .founder-card:hover .founder-overlay {
@@ -926,7 +927,6 @@ section {
     display: flex;
     gap: 0.8rem;
     margin-bottom: 1rem; /* Espaço entre os ícones e o info */
-    padding-left: 0.5rem; /* Ajuste para o alinhamento */
 }
 
 /* Os ícones individuais (Layout + Animação) */
