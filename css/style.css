@@ -445,7 +445,7 @@ section {
     overflow: hidden; /* ESSENCIAL para os efeitos */
     cursor: pointer;
     background-color: var(--color-bg);
-    height: 250px; /* Altura padrão do card (ajuste se necessário) */
+    height: 400px; /* Altura padrão do card (ajuste se necessário) */
     transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease, padding 0.4s, margin 0.4s, border 0.4s; /* Para o filtro */
 }
 
@@ -466,16 +466,64 @@ section {
 }
 
 /* --- ESTILOS PARA MÍDIAS (item-type-media) --- */
-.portfolio-item.item-type-media img {
+.portfolio-item.item-type-media img,
+.portfolio-item.item-type-media video {
     height: 100%; /* Força a imagem a ter a altura do card */
+    width: 100%;
     object-fit: cover; /* Corta a imagem para caber */
     transform-origin: center center;
     transition: transform 0.4s ease; /* Adiciona transição SÓ para mídias */
 }
 
-/* --- EFEITO DE HOVER PARA MÍDIAS --- */
-.portfolio-item.item-type-media:hover img {
-    transform: scale(1.1); /* Efeito de zoom */
+/* --- ESTILO DO BOTÃO DE PLAY DO VÍDEO --- */
+
+.video-play-btn {
+    /* Posicionamento */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3; /* Fica acima do vídeo, mas abaixo do .portfolio-info no hover */
+    
+    /* Estilo */
+    width: 70px;
+    height: 70px;
+    background-color: rgba(0, 245, 195, 0.8); /* Sua cor primária com transparência */
+    border: none;
+    border-radius: 50%;
+    color: var(--color-bg); /* Cor do ícone */
+    font-size: 1.5rem;
+    cursor: pointer;
+    
+    /* Efeito */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 1; /* Começa visível */
+}
+
+.video-play-btn:hover {
+    background-color: var(--color-primary);
+    transform: translate(-50%, -50%) scale(1.1); /* Efeito de hover */
+    box-shadow: 0 0 20px var(--color-primary);
+}
+
+/* QUANDO O VÍDEO ESTIVER TOCANDO (via JS) */
+.portfolio-item.is-playing .video-play-btn {
+    /* Esconde o botão de play */
+    opacity: 0;
+    pointer-events: none; /* Não deixa clicar no botão escondido */
+}
+
+/* Faz o vídeo ser clicável para pausar */
+.portfolio-item.is-playing video {
+    cursor: pointer;
+}
+
+/* Opcional: Escurece o overlay de info no hover para o botão de play se destacar */
+.portfolio-item:hover .portfolio-info {
+    background: linear-gradient(to top, rgba(0, 0, 0, 1) 40%, transparent);
 }
 
 /* Overlay de Informação (Comum a todos) */

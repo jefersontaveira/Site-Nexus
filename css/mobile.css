@@ -242,6 +242,89 @@
         display: none; /* Mostra a versão desktop (timeline) */
     }
 
+    
+    /* --- 6. SEÇÃO PORTFÓLIO     --- */
+
+    .portfolio-section {
+        padding: 4rem 0; /* Menos padding */
+    }
+
+    /* --- Filtros --- */
+    .portfolio-filters {
+        /* Permite que os botões quebrem a linha */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem; /* Espaço entre os botões */
+        margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+        margin: 0; /* Remove a margem lateral */
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+
+    /* --- Grid e Itens --- */
+    .portfolio-grid {
+        /* Força 1 coluna no celular */
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .portfolio-item {
+        /* Ajusta a altura dos cards no celular */
+        height: 280px; 
+    }
+
+    /* --- EFEITO: Scroll Automático para Sites (Mobile) --- */
+    
+    .portfolio-item.item-type-site img {
+        /* 1. Remove qualquer transição de hover do desktop */
+        transition: none !important; 
+        transform: translateY(0); /* Garante o estado inicial */
+        
+        /* 2. Aplica a animação, mas a deixa PAUSADA */
+        animation-name: autoScrollImage;
+        animation-duration: 30s; /* Duração (ida e volta) - ajuste como quiser */
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite; /* Loop */
+        animation-play-state: paused; /* Começa pausada */
+    }
+
+    /* 3. QUANDO o JS adicionar 'is-visible', a animação RODA */
+    .portfolio-item.item-type-site.is-visible img {
+        animation-play-state: running;
+    }
+
+    /* 4. Pausa a animação se o usuário TOCAR no card */
+    .portfolio-item.item-type-site:active img {
+        animation-play-state: paused;
+    }
+    
+    /* --- EFEITO: Mídia (Vídeo) no Mobile --- */
+    
+    /* O botão de play já funciona com 'click', 
+       então só precisamos ajustar o tamanho */
+    .video-play-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.2rem;
+    }
+
+    /* Opcional: Efeito de "zoom" no toque para mídias sem vídeo */
+    .portfolio-item.item-type-media:active img {
+         transform: scale(1.1);
+    }
+    
+    /* Ajuste do texto do overlay */
+     .portfolio-info {
+        padding: 2rem 1rem 1rem;
+    }
+     .portfolio-info h3 { font-size: 1rem; }
+     .portfolio-info p { font-size: 0.85rem; }
+
+
     /* --- 7. Seção de Depoimentos --- */
 
     /* 1. Ajusta o Card de Texto Principal */
@@ -325,63 +408,6 @@
 }
 
 
-
-
-/* --- RESPONSIVIDADE (Exemplo) --- */
-@media (max-width: 768px) {
-
-    .portfolio-filters {
-        margin-bottom: 2rem;
-    }
-    .filter-btn {
-        padding: 0.5rem 1rem;
-        margin: 0 0.3rem 0.5rem; /* Permite quebrar linha */
-        font-size: 0.85rem;
-    }
-
-    .portfolio-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1rem;
-    }
-
-    .portfolio-item {
-        height: 280px; /* Altura ligeiramente maior no mobile */
-    }
-    
-    .portfolio-info {
-        padding: 2rem 1rem 1rem;
-    }
-     .portfolio-info h3 { font-size: 1rem; }
-     .portfolio-info p { font-size: 0.85rem; }
-
-    /* --- Efeito Mobile para Sites (Auto-Scroll) --- */
-    /* Prepara a imagem para a animação */
-    .portfolio-item.item-type-site img {
-        transition: none !important; /* Remove transição de hover */
-        transform: translateY(0); /* Estado inicial */
-        animation-name: autoScrollImage;
-        animation-duration: 8s; /* Ajuste a duração */
-        animation-timing-function: ease-in-out;
-        animation-iteration-count: infinite;
-        animation-play-state: paused; /* Começa pausada */
-    }
-
-    /* Animação roda quando visível (classe do JS) */
-    .portfolio-item.item-type-site.is-visible img {
-        animation-play-state: running;
-    }
-
-    /* Pausa no toque */
-    .portfolio-item.item-type-site:active img {
-        animation-play-state: paused;
-    }
-    
-    /* Efeito de Zoom para Mídia no Toque */
-    .portfolio-item.item-type-media:active img {
-         transform: scale(1.1);
-    }
-}
-
 /* --- Keyframes da Animação de Scroll Mobile --- */
 @keyframes autoScrollImage {
     0% {
@@ -395,3 +421,4 @@
         transform: translateY(0); /* Volta para o início */
     }
 }
+

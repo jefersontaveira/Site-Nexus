@@ -205,6 +205,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* --- 3.1. LÓGICA DE PLAY/PAUSE DE VÍDEO (VERSÃO COM BOTÃO) --- */
+
+    const mediaItems = document.querySelectorAll('.portfolio-item.item-type-media');
+
+    mediaItems.forEach(item => {
+        const video = item.querySelector('video');
+        const playBtn = item.querySelector('.video-play-btn');
+
+        if (video && playBtn) {
+            
+            // 1. Ao clicar no Botão de PLAY
+            playBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Impede que o clique "vaze" para outros elementos
+                video.play();
+            });
+
+            // 2. Ao clicar no VÍDEO (para pausar)
+            video.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!video.paused) {
+                    video.pause();
+                }
+            });
+
+            // 3. Quando o vídeo começar a tocar
+            video.addEventListener('play', () => {
+                // Adiciona a classe que o CSS usa para esconder o botão
+                item.classList.add('is-playing');
+            });
+
+            // 4. Quando o vídeo for pausado
+            video.addEventListener('pause', () => {
+                // Remove a classe para o botão de play voltar
+                item.classList.remove('is-playing');
+            });
+            
+            // 5. Quando o vídeo terminar
+            video.addEventListener('ended', () => {
+                item.classList.remove('is-playing');
+                video.currentTime = 0; // Opcional: rebobina ao terminar
+            });
+        }
+    });
+
 
 
 
